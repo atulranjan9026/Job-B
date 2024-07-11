@@ -34,7 +34,6 @@ const corsOptions = {
   optionsSuccessStatus: 204
 };
 const bodyParser = require("body-parser");
-app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
