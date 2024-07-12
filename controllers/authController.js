@@ -1,4 +1,4 @@
-const { validationResult } = require("express-validator");
+const { validationResult } = require('express-validator');
 const db = require('../config/db');
 
 // Seeker Singnup
@@ -59,24 +59,28 @@ exports.login = (req, res) => {
   });
 };
 
-// user Signup
+// signup
 exports.signup = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-    if (req.body && req.body.name && req.body.email && req.body.password) {
-      const { name, email, password } = req.body;
-      const sql = `INSERT INTO userlogin (name, email, password) VALUES (?, ?, ?)`;
-      const values = [name, email, password];
-      console.log(values);
-      db.query(sql, values, (error, result) => {
-        if (error) {
-          console.error("Signup error:", error.message);
-          res.status(500).json({ success: false, error: "Internal Server Error" });
-        } else {
-          res.status(200).json({ success: true, message: "Signup successful" });
-        }
-      });
-    }
-  };
+
+  if (req.body && req.body.name && req.body.email && req.body.password) {
+    const { name, email, password } = req.body;
+    const sql = `INSERT INTO userlogin (name, email, password) VALUES (?, ?, ?)`;
+    const values = [name, email, password];
+    console.log(values);
+
+    db.query(sql, values, (error, result) => {
+      if (error) {
+        console.error("Signup error:", error.message);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+      } else {
+        res.status(200).json({ success: true, message: "Signup successful" });
+      }
+    });
+  } else {
+    res.status(400).json({ success: false, error: "Missing required fields" });
+  }
+};
