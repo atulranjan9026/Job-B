@@ -26,10 +26,13 @@ const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-// origin: 'https://job-f.onrender.com',
+
 // Configure CORS
 const corsOptions = {
-  origin: 'http://127.0.0.1:5173', // You can specify specific origins instead of '*'
+  origin: [
+    'https://66917305fc1cfb3ae22585a8--roaring-sunshine-01bc5b.netlify.app',
+    'https://job-f.onrender.com'
+  ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: ['Content-Type', 'Authorization']
 };
@@ -55,17 +58,22 @@ app.use('/review', reviewRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/booking', bookingRoutes);
 
-
 // Connect to MySQL
-db.connect(
-  (err) => {
+db.connect((err) => {
   if (err) {
     console.error("MySQL connection error:", err);
   } else {
     console.log("Connected to MySQL database");
   }
-}
-);
+});
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
+// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
 
 
 // data seeker
