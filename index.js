@@ -33,6 +33,7 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 204
 };
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,13 +55,15 @@ app.use('/booking', bookingRoutes);
 
 
 // Connect to MySQL
-db.connect((err) => {
-  if (err) {
-    console.error("MySQL connection error:", err);
-  } else {
-    console.log("Connected to MySQL database");
-  }
-});
+db.connect(
+//   (err) => {
+//   if (err) {
+//     console.error("MySQL connection error:", err);
+//   } else {
+//     console.log("Connected to MySQL database");
+//   }
+// }
+);
 
 
 // data seeker
@@ -491,5 +494,5 @@ app.get('/reqbooking2', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Connected to backend!");
+  console.log(`Connected to backend! ${port}`);
 });
