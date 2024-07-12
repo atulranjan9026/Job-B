@@ -60,14 +60,33 @@ exports.login = (req, res) => {
 };
 
 // signup
-exports.signup = (req, res) => {
+// exports.signup = (req, res) => {
  
+//   if (req.body && req.body.name && req.body.email && req.body.password) {
+//     const { name, email, password } = req.body;
+//     const sql = `INSERT INTO userlogin (name, email, password) VALUES (?, ?, ?)`;
+//     const values = [name, email, password];
+//     console.log(values);
+
+//     db.query(sql, values, (error, result) => {
+//       if (error) {
+//         console.error("Signup error:", error.message);
+//         res.status(500).json({ success: false, error: "Internal Server Error" });
+//       } else {
+//         res.status(200).json({ success: true, message: "Signup successful" });
+//       }
+//     });
+//   } else {
+//     res.status(400).json({ success: false, error: "Missing required fields" });
+//   }
+// };
+
+exports.signup= (req, res) => {
   if (req.body && req.body.name && req.body.email && req.body.password) {
     const { name, email, password } = req.body;
     const sql = `INSERT INTO userlogin (name, email, password) VALUES (?, ?, ?)`;
     const values = [name, email, password];
     console.log(values);
-
     db.query(sql, values, (error, result) => {
       if (error) {
         console.error("Signup error:", error.message);
@@ -76,7 +95,5 @@ exports.signup = (req, res) => {
         res.status(200).json({ success: true, message: "Signup successful" });
       }
     });
-  } else {
-    res.status(400).json({ success: false, error: "Missing required fields" });
   }
 };
