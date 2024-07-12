@@ -30,8 +30,8 @@ const razorpayInstance = new Razorpay({
 // Configure CORS
 const corsOptions = {
   origin: [
-    'https://66917305fc1cfb3ae22585a8--roaring-sunshine-01bc5b.netlify.app',
-    'https://job-f.onrender.com'
+    'https://job-f.onrender.com',
+    'http://127.0.0.1:5173'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: ['Content-Type', 'Authorization']
