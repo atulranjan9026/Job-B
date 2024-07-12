@@ -27,12 +27,14 @@ const razorpayInstance = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 // Define CORS options
+// Configure CORS
 const corsOptions = {
-  origin: 'https://job-f.onrender.com',
+  origin: '*', // You can specify specific origins instead of '*'
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
+
+app.use(cors(corsOptions));
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
