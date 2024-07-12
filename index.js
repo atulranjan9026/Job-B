@@ -40,6 +40,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const bodyParser = require("body-parser");
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
