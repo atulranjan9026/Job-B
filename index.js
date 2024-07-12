@@ -56,13 +56,13 @@ app.use('/booking', bookingRoutes);
 
 // Connect to MySQL
 db.connect(
-//   (err) => {
-//   if (err) {
-//     console.error("MySQL connection error:", err);
-//   } else {
-//     console.log("Connected to MySQL database");
-//   }
-// }
+  (err) => {
+  if (err) {
+    console.error("MySQL connection error:", err);
+  } else {
+    console.log("Connected to MySQL database");
+  }
+}
 );
 
 
