@@ -210,23 +210,25 @@ app.post("/data", async (req, res) => {
 
 app.post("/resultData", (req, res) => {
   const { id, ids } = req.body;
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ error: "Invalid or empty 'ids' array" });
+  }
+
   // Construct and execute the SQL query
-  let sql = `SELECT * FROM seeker WHERE id IN (`;
+  let sql = `SELECT * FROM seeker WHERE id IN (${ids.map(() => '?').join(',')})`;
+  console.log("SQL Query:", sql);
+  console.log("Query Parameters:", ids);
 
-  ids.forEach((userId) => (sql += userId + ","));
-  sql = sql.slice(0, -1);
-  sql += ")";
-  console.log("sql :", sql);
-
-  db.query(sql, (err, result) => {
+  db.query(sql, ids, (err, result) => {
     if (err) {
       console.error("Error executing MySQL query:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-    } else {
-      res.json(result);
+      return res.status(500).json({ error: "Internal Server Error", details: err.message });
     }
+    res.json(result);
   });
 });
+
 
 app.post("/Text", (req, res) => {
   const { names } = req.body;
