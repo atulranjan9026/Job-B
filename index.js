@@ -229,23 +229,19 @@ app.post("/resultData", (req, res) => {
 });
 
 app.post("/Text", (req, res) => {
-  const {names} = req.body;
-  let sql =
-    `SELECT name,id,
-    salary,
-    mobile,
-    email,
-    exp,
-    cert,
-    image, levenshtein_search("${names}", name) AS similarity FROM seeker ORDER BY similarity`;
-    console.log("sql :", sql);
+  const { names } = req.body;
+  let sql = `SELECT name,id, salary, mobile, email, exp, cert, image, levenshtein_search("${names}", name) AS similarity FROM seeker ORDER BY similarity`;
+  console.log("sql :", sql);
   db.query(sql, (err, data) => {
-    // console.log('sql data :', data)
-    if (err) return res.json(err);
+    console.log('sql data :', data)
+    if (err) return res.json([]);
+    if (!Array.isArray(data)) {
+      return res.json([]);
+    }
     return res.json(data);
-    //  console.log(data)
   });
 });
+
 
 // Endpoint to handle submitting a review
 app.post('/reviews', (req, res) => {
