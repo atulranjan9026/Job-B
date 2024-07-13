@@ -30,7 +30,7 @@ const razorpayInstance = new Razorpay({
 // Configure CORS
 const corsOptions = {
   origin: [
-    'https://job-f.onrender.com',
+    // 'https://job-f.onrender.com',
     'http://127.0.0.1:5173'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
