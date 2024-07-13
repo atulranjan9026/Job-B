@@ -230,12 +230,12 @@ app.post("/resultData", (req, res) => {
 
 app.post("/Text", (req, res) => {
   const { names } = req.body;
-  let sql = `SELECT name,id, salary, mobile, email, exp, cert, image, levenshtein_search("${names}", name) AS similarity FROM seeker ORDER BY similarity`;
+  let sql = `SELECT name, id, salary, mobile, email, exp, cert, image FROM seeker WHERE name LIKE ? ORDER BY name`;
   console.log("sql :", sql);
-  db.query(sql, (err, data) => {
+  db.query(sql, [`%${names}%`], (err, data) => {
     console.log('sql data :', data)
-    if (err) return res.json([]);
-    if (!Array.isArray(data)) {
+    if (err) {
+      console.error('Error:', err);
       return res.json([]);
     }
     return res.json(data);
